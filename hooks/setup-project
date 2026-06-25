@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+source "$(dirname "$0")/lib/github-cli-common.sh"
+
+install -d -m 700 "$HOME/.config/gh"
+
+if [[ ! -f "$HOME/.config/gh/hosts.yml" ]]; then
+  printf 'gh-cli SDK ready. Run gh auth login to authenticate.\n'
+fi

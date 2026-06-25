@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+source "$(dirname "$0")/lib/github-cli-common.sh"
+
+archive_dir="$(find_sdk_archive_dir)"
+if [[ -z "$archive_dir" ]]; then
+  echo "gh-cli archive directory not found under $sdk_root" >&2
+  exit 1
+fi
+
+cat <<EOF >/etc/profile.d/gh-cli.sh
+export PATH="$archive_dir/bin:\$PATH"
+EOF
+
+if [[ -f "$archive_dir/share/bash-completion/completions/gh" ]]; then
+  install -D -m 0644 \
+    "$archive_dir/share/bash-completion/completions/gh" \
+    /usr/share/bash-completion/completions/gh
+fi
+
+if [[ -f "$archive_dir/share/zsh/site-functions/_gh" ]]; then
+  install -D -m 0644 \
+    "$archive_dir/share/zsh/site-functions/_gh" \
+    /usr/share/zsh/site-functions/_gh
+fi
+
+if [[ -f "$archive_dir/share/fish/vendor_completions.d/gh.fish" ]]; then
+  install -D -m 0644 \
+    "$archive_dir/share/fish/vendor_completions.d/gh.fish" \
+    /usr/share/fish/vendor_completions.d/gh.fish
+fi

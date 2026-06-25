@@ -1,0 +1,16 @@
+name: gh-cli
+version: "2.92.0"
+summary: GitHub CLI for Workshop environments
+description: |
+  Install the GitHub CLI inside a Workshop environment, expose the gh command
+  in shell sessions, and preserve GitHub CLI configuration across refreshes.
+license: MIT
+platforms:
+  ubuntu@24.04:amd64:
+  ubuntu@26.04:amd64:
+
+parts:
+  gh-release:
+    plugin: dump
+    source: https://github.com/cli/cli/releases/download/v${CRAFT_PROJECT_VERSION}/gh_${CRAFT_PROJECT_VERSION}_linux_${CRAFT_ARCH_BUILD_FOR}.tar.gz
+    source-type: tar

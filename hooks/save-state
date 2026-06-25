@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+source "$(dirname "$0")/lib/github-cli-common.sh"
+
+if [[ ! -d "$gh_config_dir" ]]; then
+  exit 0
+fi
+
+mkdir -p "$SDK_STATE_DIR"
+rm -rf "$SDK_STATE_DIR/gh"
+cp -a "$gh_config_dir" "$SDK_STATE_DIR/gh"
